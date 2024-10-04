@@ -33,6 +33,28 @@ export const postRouter = createTRPCRouter({
     return post ?? null;
   }),
 
+  getPosts: publicProcedure.query(async ({ ctx }) => {
+    const posts = [
+      {
+        id: 1,
+        name: 'To the guy who was playing the saxophone in front of his house next to the canal: you made my day!',
+        createdById: 'gymbro',
+        location: 'Amsterdam, Central',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 2,
+        name: 'string',
+        createdById: 'gymbro',
+        location: 'Amsterdam, Central',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    return posts;
+  }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

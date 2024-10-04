@@ -18,7 +18,7 @@ export function LatestPost() {
 
   return (
     <div className="w-full max-w-xs">
-      {latestPost ? (
+      {latestPost && 0 ? (
         <p className="truncate">Your most recent post: {latestPost.name}</p>
       ) : (
         <p>You have no posts yet.</p>
