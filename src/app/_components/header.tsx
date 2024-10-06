@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from './ui/button'
 import { UserSearch } from 'lucide-react'
+import SpotModal from './spotModal'
 
 const Header = () => {
   return (
@@ -9,7 +10,7 @@ const Header = () => {
 		<span className='font-bold text-3xl'>Spotted</span>
 		<div className='flex gap-4'>
                 {/* {session && <span>Logged in as {session.user?.name}</span>} */}
-			<Button className='flex gap-2'><UserSearch strokeWidth={1.5}/> Spot someone!</Button>
+			<SpotModal />
 		</div>
 	</div>
   )
