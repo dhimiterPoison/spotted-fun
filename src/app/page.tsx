@@ -3,15 +3,28 @@ import Link from "next/link";
 import { LatestPost } from "~/app/_components/post";
 import { getServerAuthSession } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import { Card, CardDescription, CardHeader, CardTitle } from "./_components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./_components/ui/card";
 import { Button } from "./_components/ui/button";
 import { LatestPosts } from "./_components/homeposts";
+import { getXataClient } from "~/xata";
+import { pgTable, text } from "drizzle-orm/pg-core";
+
+
+const xata = getXataClient();
+const spots = pgTable('spots', {
+  id: text('id').primaryKey(),
+  name: text('content'),
+  city: text('location')
+});
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await getServerAuthSession();
+  // const session = await getServerAuthSession();
 
-  void api.post.getLatest.prefetch();
+  // void api.post.getLatest.prefetch();
+
+
+  const spotsList = await xata.db.spots.getAll();
 
 
   return (
@@ -23,8 +36,17 @@ export default async function Home() {
               <p className="text-lg">Connect with people you've seen around campus. Make new friends and expand your network!</p>
             </div>
             <div className="col-span-1">
-              <LatestPosts />
-              
+
+            {spotsList.map((spot, index) => (
+                <Card key={spot.id} className="h-full">
+                  <CardHeader>
+                    <CardTitle className="text-sm truncate">{spot.content}</CardTitle>
+                  </CardHeader>
+                  <CardContent
+                    className="text-sm truncate">{spot.location}
+                </CardContent>
+                </Card>
+              ))}
               {/* <Card className="h-full">
                 <CardHeader>
                   <CardTitle>Get Started</CardTitle>
@@ -49,7 +71,7 @@ export default async function Home() {
             </div>
           </div> */}
 
-          {session?.user && <LatestPost />}
+          {/* {session?.user && <LatestPost />} */}
       </main>
     </HydrateClient>
   );

@@ -9,7 +9,6 @@ const Header = () => {
 		<span className='font-bold text-3xl'>Spotted</span>
 		<div className='flex gap-4'>
                 {/* {session && <span>Logged in as {session.user?.name}</span>} */}
-
 			<Button className='flex gap-2'><UserSearch strokeWidth={1.5}/> Spot someone!</Button>
 		</div>
 	</div>

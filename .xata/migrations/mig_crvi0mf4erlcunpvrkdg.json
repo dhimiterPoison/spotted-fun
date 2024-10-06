@@ -1,0 +1,19 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_crvi0mf4erlcunpvrkdg",
+    "operations": [
+      {
+        "rename_table": {
+          "to": "spots",
+          "from": "spot"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_crvi0mf4erlcunpvrkdg",
+  "parent": "mig_crvi0hv4erlcunpvrkcg",
+  "schema": "public",
+  "startedAt": "2024-10-03T22:53:13.737493Z"
+}

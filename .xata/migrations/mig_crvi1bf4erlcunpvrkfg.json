@@ -1,0 +1,27 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_crvi1bf4erlcunpvrkfg",
+    "operations": [
+      {
+        "add_column": {
+          "table": "spots",
+          "column": {
+            "pk": false,
+            "name": "location",
+            "type": "text",
+            "unique": false,
+            "comment": "",
+            "default": "'location'",
+            "nullable": false
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_crvi1bf4erlcunpvrkfg",
+  "parent": "mig_crvi11n4erlcunpvrkeg",
+  "schema": "public",
+  "startedAt": "2024-10-03T22:54:38.241126Z"
+}

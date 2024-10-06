@@ -5,6 +5,7 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 import { Card, CardHeader, CardTitle } from "./ui/card";
 
+
 export function LatestPosts() {
   const [latestPosts] = api.post.getPosts.useSuspenseQuery();
 
