@@ -19,11 +19,12 @@ import { type AdapterAccount } from "next-auth/adapters";
  */
 export const createTable = pgTableCreator((name) => `spotted-fun_${name}`);
 
-export const posts = createTable(
-  "post",
+export const spots = createTable(
+  "spots",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    location: varchar("location", { length: 256 }),
+    content: text("content"),
     createdById: varchar("created_by", { length: 255 })
       .notNull()
       .references(() => users.id),
@@ -36,7 +37,7 @@ export const posts = createTable(
   },
   (example) => ({
     createdByIdIdx: index("created_by_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
+    nameIndex: index("name_idx").on(example.content),
   })
 );
 
