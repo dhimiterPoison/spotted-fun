@@ -8,6 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from './_components/ui/card'
+import NewSpotCard from './_components/newSpotCard'
 
 const xata = getXataClient()
 const spots = pgTable('spots', {
@@ -34,7 +35,7 @@ export default async function Home() {
 
     return (
         <HydrateClient>
-            <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#e8d7ff] to-[#15162c] text-white">
+            <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-[#e8d7ff] to-[#15162c] text-white">
                 <div className="container grid grid-cols-2 md:grid-cols-3  gap-4 p-4 w-full h-full">
                     <div className="col-span-2  text-black p-6">
                         <h1 className="text-4xl font-bold mb-4">
@@ -46,6 +47,10 @@ export default async function Home() {
                             cool? Tell them!
                         </p>
                     </div>
+                    <div  className="col-span-1 row-span-1">
+                        <NewSpotCard />    
+                    </div>
+                            
 
                     {spotsList.records.map(spot => (
                         <div key={spot.id} className="col-span-1 row-span-1">

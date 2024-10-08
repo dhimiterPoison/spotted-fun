@@ -8,6 +8,268 @@ import type {
 
 const tables = [
   {
+    name: "days",
+    checkConstraints: {
+      days_xata_id_length_xata_id: {
+        name: "days_xata_id_length_xata_id",
+        columns: ["xata_id"],
+        definition: "CHECK ((length(xata_id) < 256))",
+      },
+    },
+    foreignKeys: {},
+    primaryKey: [],
+    uniqueConstraints: {
+      _pgroll_new_days_xata_id_key: {
+        name: "_pgroll_new_days_xata_id_key",
+        columns: ["xata_id"],
+      },
+    },
+    columns: [
+      {
+        name: "day",
+        type: "datetime",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "notesCount",
+        type: "int",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "summary",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "userId",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: "'userId'::text",
+        comment: "",
+      },
+      {
+        name: "xata_createdat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: "('rec_'::text || (xata_private.xid())::text)",
+        comment: "",
+      },
+      {
+        name: "xata_updatedat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_version",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "0",
+        comment: "",
+      },
+    ],
+  },
+  {
+    name: "notes",
+    checkConstraints: {
+      notes_xata_id_length_xata_id: {
+        name: "notes_xata_id_length_xata_id",
+        columns: ["xata_id"],
+        definition: "CHECK ((length(xata_id) < 256))",
+      },
+    },
+    foreignKeys: {
+      dayId_link: {
+        name: "dayId_link",
+        columns: ["dayId"],
+        referencedTable: "days",
+        referencedColumns: ["xata_id"],
+        onDelete: "RESTRICT",
+      },
+    },
+    primaryKey: [],
+    uniqueConstraints: {
+      _pgroll_new_notes_xata_id_key: {
+        name: "_pgroll_new_notes_xata_id_key",
+        columns: ["xata_id"],
+      },
+    },
+    columns: [
+      {
+        name: "content",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "dayId",
+        type: "link",
+        link: { table: "days" },
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: '{"xata.link":"days"}',
+      },
+      {
+        name: "location",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "title",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "xata_createdat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: "('rec_'::text || (xata_private.xid())::text)",
+        comment: "",
+      },
+      {
+        name: "xata_updatedat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_version",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "0",
+        comment: "",
+      },
+    ],
+  },
+  {
+    name: "notetags",
+    checkConstraints: {
+      notetags_xata_id_length_xata_id: {
+        name: "notetags_xata_id_length_xata_id",
+        columns: ["xata_id"],
+        definition: "CHECK ((length(xata_id) < 256))",
+      },
+    },
+    foreignKeys: {
+      noteId_link: {
+        name: "noteId_link",
+        columns: ["noteId"],
+        referencedTable: "notes",
+        referencedColumns: ["xata_id"],
+        onDelete: "RESTRICT",
+      },
+      tagId_link: {
+        name: "tagId_link",
+        columns: ["tagId"],
+        referencedTable: "tags",
+        referencedColumns: ["xata_id"],
+        onDelete: "RESTRICT",
+      },
+    },
+    primaryKey: [],
+    uniqueConstraints: {
+      _pgroll_new_notetags_xata_id_key: {
+        name: "_pgroll_new_notetags_xata_id_key",
+        columns: ["xata_id"],
+      },
+    },
+    columns: [
+      {
+        name: "noteId",
+        type: "link",
+        link: { table: "notes" },
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: '{"xata.link":"notes"}',
+      },
+      {
+        name: "tagId",
+        type: "link",
+        link: { table: "tags" },
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: '{"xata.link":"tags"}',
+      },
+      {
+        name: "xata_createdat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: "('rec_'::text || (xata_private.xid())::text)",
+        comment: "",
+      },
+      {
+        name: "xata_updatedat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_version",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "0",
+        comment: "",
+      },
+    ],
+  },
+  {
     name: "spots",
     checkConstraints: {
       spot_xata_id_length_xata_id: {
@@ -75,16 +337,100 @@ const tables = [
       },
     ],
   },
+  {
+    name: "tags",
+    checkConstraints: {
+      tags_xata_id_length_xata_id: {
+        name: "tags_xata_id_length_xata_id",
+        columns: ["xata_id"],
+        definition: "CHECK ((length(xata_id) < 256))",
+      },
+    },
+    foreignKeys: {},
+    primaryKey: [],
+    uniqueConstraints: {
+      _pgroll_new_tags_xata_id_key: {
+        name: "_pgroll_new_tags_xata_id_key",
+        columns: ["xata_id"],
+      },
+    },
+    columns: [
+      {
+        name: "label",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "name",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "xata_createdat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: "('rec_'::text || (xata_private.xid())::text)",
+        comment: "",
+      },
+      {
+        name: "xata_updatedat",
+        type: "datetime",
+        notNull: true,
+        unique: false,
+        defaultValue: "now()",
+        comment: "",
+      },
+      {
+        name: "xata_version",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "0",
+        comment: "",
+      },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
+export type Days = InferredTypes["days"];
+export type DaysRecord = Days & XataRecord;
+
+export type Notes = InferredTypes["notes"];
+export type NotesRecord = Notes & XataRecord;
+
+export type Notetags = InferredTypes["notetags"];
+export type NotetagsRecord = Notetags & XataRecord;
+
 export type Spots = InferredTypes["spots"];
 export type SpotsRecord = Spots & XataRecord;
 
+export type Tags = InferredTypes["tags"];
+export type TagsRecord = Tags & XataRecord;
+
 export type DatabaseSchema = {
+  days: DaysRecord;
+  notes: NotesRecord;
+  notetags: NotetagsRecord;
   spots: SpotsRecord;
+  tags: TagsRecord;
 };
 
 const DatabaseClient = buildClient();
@@ -105,6 +451,6 @@ let instance: XataClient | undefined = undefined;
 export const getXataClient = () => {
   if (instance) return instance;
 
-  instance = new XataClient({ apiKey: process.env.DB_API_KEY });
+  instance = new XataClient();
   return instance;
 };
