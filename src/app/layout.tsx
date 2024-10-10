@@ -21,7 +21,9 @@ export default function RootLayout({
                 <TRPCReactProvider>
                     <div className="flex flex-col w-full min-h-screen">
                         <Header />
-                        <div className="navpage flex w-full grow"> {children}</div>
+                        <div className="navpage flex w-full grow">
+                            {children}
+                        </div>
                     </div>
                 </TRPCReactProvider>
             </body>
