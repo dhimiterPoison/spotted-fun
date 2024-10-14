@@ -5,6 +5,22 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, XIcon, XCircleIcon } from 'lucide-react'
 import { Button } from '../_components/ui/button'
 import { ScrollArea } from '../_components/ui/scroll-area'
+import { TextGenerateEffect } from '../_components/ui/text-generate-effect'
+
+
+// import localFont from 'next/font/local'
+
+// const etherealSemibold = localFont({
+// 	src: [
+// 	  {
+// 		path: 'font/ethereal-semibold.otf',
+// 		weight: '700',
+// 		style: 'normal',
+// 	  },
+// 	],
+// 	variable: '--font-ethereal',
+//   });
+
 
 // Define the types for photo and filmRoll objects
 type Photo = {
@@ -22,12 +38,14 @@ type FilmRoll = {
     photos: Photo[]
 }
 
+const words = `Magic captured into film rolls. Memories assume phisical shape.`
+
 // Define the type for filmRolls array
 const filmRolls: FilmRoll[] = [
     {
         id: 1,
         title: 'Urban Jungle',
-        coverImage: '/adventures/first-amsterdam/highres/1.jpg',
+        coverImage: '/adventures/first-amsterdam/hires/1.jpg',
         color: '#FF6B6B',
         photos: [
             {
@@ -100,24 +118,27 @@ const filmRolls: FilmRoll[] = [
     },
     {
         id: 2,
-        title: 'Coastal Dreams',
-        coverImage: '/placeholder.svg?height=600&width=400',
+        title: `Albania '22`,
+        coverImage: '/adventures/albania22/hires/1.jpg',
         color: '#4ECDC4',
         photos: [
-            {
+			{
                 id: 1,
-                url: '/placeholder.svg?height=800&width=600',
-                caption: 'Misty cliffs at dawn',
+                url: '/adventures/albania22',
+                extension: 'jpg',
+                caption: 'Neon lights reflecting in puddles',
             },
             {
                 id: 2,
-                url: '/placeholder.svg?height=800&width=600',
-                caption: 'Abandoned lighthouse',
+                url: '/adventures/albania22',
+                extension: 'jpg',
+                caption: 'Graffiti-covered alleyways',
             },
             {
                 id: 3,
-                url: '/placeholder.svg?height=800&width=600',
-                caption: 'Surfers catching the perfect wave',
+                url: '/adventures/albania22',
+                extension: 'jpg',
+                caption: 'Bustling night markets',
             },
         ],
     },
@@ -173,22 +194,22 @@ export default function AnalogAdventures() {
         }
     }, [selectedRoll])
 
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-		  if (event.key === 'Escape') {
-			setSelectedRoll(null)
-			setCurrentPhotoIndex(0)
-		  }
-		}
-	  
-		// Attach event listener when the component is mounted
-		window.addEventListener('keydown', handleKeyDown)
-	  
-		// Clean up the event listener when the component is unmounted
-		return () => {
-		  window.removeEventListener('keydown', handleKeyDown)
-		}
-	  }, [])
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setSelectedRoll(null)
+                setCurrentPhotoIndex(0)
+            }
+        }
+
+        // Attach event listener when the component is mounted
+        window.addEventListener('keydown', handleKeyDown)
+
+        // Clean up the event listener when the component is unmounted
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [])
 
     const nextPhoto = () => {
         setCurrentPhotoIndex(prevIndex =>
@@ -208,17 +229,23 @@ export default function AnalogAdventures() {
     }
 
     return (
-        <div className="min-h-screen w-full bg-black text-white overflow-hidden">
-            <ScrollArea className="h-screen">
+        <div className="min-h-screen w-full bg-white text-black overflow-hidden">
+            <ScrollArea className="h-screen z-0">
                 <div className="p-8">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-12 tracking-tighter">
+                    <h1 className={`hero-title text-4xl md:text-6xl font-bold mb-12 tracking-tighter`}>
+					{/* ${etherealSemibold.className} */}
                         Analog adventures
                     </h1>
+                    <TextGenerateEffect
+                        duration={2}
+                        filter={false}
+                        words={words}
+                    />
 
                     {!selectedRoll && (
                         <div
                             ref={containerRef}
-                            className="flex space-x-8 overflow-x-auto pb-8 snap-x snap-mandatory"
+                            className="flex space-x-8 overflow-x-auto py-8 snap-x snap-mandatory"
                             style={{
                                 scrollbarWidth: 'none',
                                 msOverflowStyle: 'none',
@@ -237,13 +264,13 @@ export default function AnalogAdventures() {
                                         className="w-full h-full object-cover"
                                     />
                                     <div
-                                        className="absolute inset-0 flex items-end p-6"
+                                        className="absolute inset-0 flex items-start p-6"
                                         style={{
                                             background: `linear-gradient(to top, transparent, black)`,
                                         }}
                                         // style={{ background: `linear-gradient(to top, ${roll.color}cc, transparent)` }}
                                     >
-                                        <h2 className="text-3xl font-bold">
+                                        <h2 className="text-3xl font-bold text-white">
                                             {roll.title}
                                         </h2>
                                     </div>
@@ -258,7 +285,7 @@ export default function AnalogAdventures() {
                                 initial={{ opacity: 0, y: 50 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 50 }}
-                                className="fixed inset-0 bg-black p-8 overflow-hidden flex flex-col top-20"
+                                className="fixed inset-0 bg-white p-8 overflow-hidden flex flex-col top-20 z-40"
                                 style={{
                                     backgroundColor: `${selectedRoll.color}22`,
                                 }}
@@ -270,7 +297,7 @@ export default function AnalogAdventures() {
                                         setSelectedRoll(null)
                                         setCurrentPhotoIndex(0)
                                     }}
-                                    className="flex w-fit cursor-pointer p-2 absolute right-8 text-white z-50"
+                                    className="flex w-fit cursor-pointer p-2 absolute right-8 text-black z-50"
                                 >
                                     <span className="flex items-center gap-4 text-lg uppercase">
                                         Close

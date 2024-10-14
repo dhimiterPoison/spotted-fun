@@ -37,3 +37,4 @@ export const formatDateLong = (date?: Date | null) => {
         year: 'numeric',
     })
 }
+

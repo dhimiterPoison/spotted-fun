@@ -64,3 +64,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@font-face {
+  font-family: 'Ethereal';
+  src: url('/font/etheral-sembibold.otf') format('otf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ethereal';
+  src: url('/font/etheral-thin.otf') format('otf');
+  font-weight: 100;
+  font-style: normal;
+}
+
+.hero-title {
+    font-family: 'Ethereal', sans-serif;
+    font-weight: 100;
+}
