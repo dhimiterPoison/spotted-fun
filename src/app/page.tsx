@@ -1,97 +1,76 @@
-import { pgTable, text } from 'drizzle-orm/pg-core'
-import { api, HydrateClient } from '~/trpc/server'
-import { getXataClient } from '~/xata'
+import React from 'react'
 import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from './_components/ui/card'
-import NewSpotCard from './_components/newSpotCard'
+import { cn } from '~/lib/utils'
+import { Button } from './_components/ui/button'
+import Link from 'next/link'
 
-const xata = getXataClient()
-const spots = pgTable('spots', {
-    id: text('id').primaryKey(),
-    name: text('content'),
-    city: text('location'),
-})
+const routes = [
+    {
+        id: 1,
+        title: 'Spotted',
+        description:
+            "Send a smile to someone! Did you appreciate someone's style? Did you see someone doing something cool? Tell them!",
+        customClass:
+            'text-white bg-gradient-to-b from-[#15162c] to-[#e8d7ff] text-white',
+        path: 'spotted'
+    },
+    {
+        id: 2,
+        title: 'Analog adventures',
+        description:
+            'Magic captured into film rolls. Memories assume phisical shape.',
+        customClass:
+            'text-white bg-gradient-to-b from-[#15162c] to-[#1c4c2c] text-white',
+            path: 'analog-adventures'
+        },
+    {
+        id: 3,
+        title: 'Finances',
+        description:
+            'Manage your finances in the most effective way for your needs',
+        customClass:
+            'text-white bg-gradient-to-b from-[#15162c] to-[#0000aa] text-white',
+            path: 'finances'
+        },
+]
 
-export default async function Home() {
-    const hello = await api.post.hello({ text: 'from tRPC' })
-    // const session = await getServerAuthSession();
-
-    const spotsList = await xata.db.spots
-        .select(['xata.createdAt', 'content', 'location'])
-        .getPaginated({
-            pagination: {
-                size: 16,
-            },
-            sort: {
-                column: 'xata.createdAt',
-                direction: 'desc',
-            },
-        })
-
+const HomePage = () => {
     return (
-        <HydrateClient>
-            <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-[#e8d7ff] to-[#15162c] text-white">
-                <div className="container grid grid-cols-2 md:grid-cols-3  gap-4 p-4 w-full h-full">
-                    <div className="col-span-2  text-black p-6">
-                        <h1 className="text-4xl font-bold mb-4">
-                            Welcome to Spotted
-                        </h1>
-                        <p className="text-lg">
-                            Send a smile to someone! Did you appreciate
-                            someone's style? Did you see someone doing something
-                            cool? Tell them!
-                        </p>
-                    </div>
-                    <div  className="col-span-1 row-span-1">
-                        <NewSpotCard />    
-                    </div>
-                            
-
-                    {spotsList.records.map(spot => (
-                        <div key={spot.id} className="col-span-1 row-span-1">
-                            <Card className="h-full">
-                                <CardHeader>
-                                    <CardDescription>
-                                        {spot.location}
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <CardTitle>{spot.content}</CardTitle>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    ))}
-                </div>
-                {/* <Card className="h-full">
-                <CardHeader>
-                  <CardTitle>Get Started</CardTitle>
-                  <CardDescription>Create your profile or search for others</CardDescription>
-                </CardHeader>
-                <div className="p-6">
-                  <Button className="w-full mb-2">Create Profile</Button>
-                  <Button variant="outline" className="w-full">Search Users</Button>
-                </div>
-              </Card> */}
-                <div></div>
-                {/* <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
-
-            <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-center text-2xl text-white">
-              </p>
-              
-            </div>
-          </div> */}
-
-                {/* {session?.user && <LatestPost />} */}
-            </main>
-        </HydrateClient>
+        <main className="flex  gap-8 w-full min-h-full justify-center p-8">
+            {routes.map(route => {
+                return (
+                    <Card
+                        className={cn(
+                            'border-none relative h-72 w-96 shadow-sm',
+                            route.customClass
+                        )}
+                    >
+                        <CardHeader>
+                            <CardTitle>{route.title}</CardTitle>
+                            <CardDescription className={cn('text-white')}>
+                                {route.description}
+                            </CardDescription>
+                        </CardHeader>
+                        {/* <CardContent>
+                            <p>Card Content</p>
+                        </CardContent> */}
+                        <CardFooter className="flex justify-end  absolute left-0 w-full bottom-0">
+                            <Link href={route.path}><Button className="border border-white">
+                                Jump in! 
+                            </Button></Link>
+                        </CardFooter>
+                    </Card>
+                )
+            })}
+        </main>
     )
 }
+
+export default HomePage

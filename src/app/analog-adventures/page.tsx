@@ -44,7 +44,7 @@ const words = `Magic captured into film rolls. Memories assume phisical shape.`
 const filmRolls: FilmRoll[] = [
     {
         id: 1,
-        title: 'Urban Jungle',
+        title: `A'dam magic`,
         coverImage: '/adventures/first-amsterdam/hires/1.jpg',
         color: '#FF6B6B',
         photos: [
